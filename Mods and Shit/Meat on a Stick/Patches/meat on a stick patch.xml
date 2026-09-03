@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <!-- Meat on a Stick + Expansion add 16 near-identical Campfire bills (meat, veg, morsel of meat,
+       meat and veg blend, fish, fruit, mushroom, plain stick - each as a single/x4 pair). Consolidate
+       them into two: "cook food on a stick" and "cook food on a stick x4", which accept any raw meat,
+       produce or fish and mix freely. The original RecipeDefs/ThingDefs are left in place (only
+       stripped from the Campfire's recipeUsers) so existing saves and cooked meals stay valid. -->
+
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookMeatOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookMeatOnAStickBulk"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookVegOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookVegOnAStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookLittleMeatOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookLittleMeatOnAStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookBlendedMeatOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookBlendedMeatOnAStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookFishOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookFishOnAStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookFruitOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookFruitOnAStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookFungusOnAStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="CookFungusOnAStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="moas_CookStick"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/RecipeDef[defName="moas_CookStick4"]/recipeUsers/li[.="Campfire"]</xpath>
+  </Operation>
+
+  <!-- Universal "food on a stick" meal, built on MealCooked so its food-kind flags follow whatever
+       ingredients were actually used (same base the Expansion's own "blend" item uses). Naming
+       ("Roasted venison", "Roasted potato", etc) comes from the base mod's per-instance NameGen comp. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs</xpath>
+    <value>
+      <ThingDef ParentName="MealCooked">
+        <defName>MeatOnAStick_food</defName>
+        <label>food on a stick</label>
+        <description>Food skewered onto a stick and roasted over a fire.</description>
+        <graphicData>
+          <texPath>Things/Item/Meal/MeatOnAStick</texPath>
+          <graphicClass>Graphic_StackCount</graphicClass>
+        </graphicData>
+        <statBases>
+          <MarketValue>10</MarketValue>
+          <WorkToMake>190</WorkToMake>
+          <Nutrition>0.9</Nutrition>
+        </statBases>
+        <ingestible>
+          <preferability>MealSimple</preferability>
+          <ingestEffect>EatVegetarian</ingestEffect>
+          <ingestSound>Meal_Eat</ingestSound>
+        </ingestible>
+        <comps>
+          <li Class="MeatOnAStick.CompProperties_NameGen" />
+        </comps>
+      </ThingDef>
+    </value>
+  </Operation>
+
+  <!-- Same tier as vanilla's simple meal: raw food, cooked at a Campfire, no skill investment. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs</xpath>
+    <value>
+      <RecipeDef ParentName="CookMealBase">
+        <defName>CookFoodOnAStick</defName>
+        <label>cook food on a stick</label>
+        <description>Cook raw meat, produce, or fish over an open fire.</description>
+        <jobString>Cooking a food skewer.</jobString>
+        <workSpeedStat>CookSpeed</workSpeedStat>
+        <requiredGiverWorkType>Cooking</requiredGiverWorkType>
+        <effectWorking>Cook</effectWorking>
+        <soundWorking>Recipe_CookMeal</soundWorking>
+        <allowMixingIngredients>true</allowMixingIngredients>
+        <ingredientValueGetterClass>MOAS_Expansion.IngredientValueGetter_MeatlessStick</ingredientValueGetterClass>
+        <researchPrerequisite>Ferny_SimpleMeals</researchPrerequisite>
+        <ingredients>
+          <li>
+            <filter>
+              <categories>
+                <li>MeatRaw</li>
+                <li>PlantFoodRaw</li>
+                <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
+                <li MayRequire="vanillaexpanded.vcef">Fish</li>
+              </categories>
+            </filter>
+            <count>0.5</count>
+          </li>
+          <li>
+            <filter>
+              <thingDefs>
+                <li>chrisb_moas_sticks</li>
+              </thingDefs>
+            </filter>
+            <count>1</count>
+          </li>
+        </ingredients>
+        <fixedIngredientFilter>
+          <categories>
+            <li>MeatRaw</li>
+            <li>PlantFoodRaw</li>
+            <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
+            <li MayRequire="vanillaexpanded.vcef">Fish</li>
+          </categories>
+          <disallowedCategories>
+            <li>AnimalProductRaw</li>
+          </disallowedCategories>
+        </fixedIngredientFilter>
+        <products>
+          <MeatOnAStick_food>1</MeatOnAStick_food>
+        </products>
+        <workSkill>Cooking</workSkill>
+        <displayPriority>90</displayPriority>
+        <recipeUsers>
+          <li>Campfire</li>
+        </recipeUsers>
+      </RecipeDef>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs</xpath>
+    <value>
+      <RecipeDef ParentName="CookMealBase">
+        <defName>CookFoodOnAStick4</defName>
+        <label>cook food on a stick x4</label>
+        <description>Cook raw meat, produce, or fish over an open fire (x4).</description>
+        <jobString>Cooking 4 food skewers.</jobString>
+        <workAmount>760</workAmount>
+        <workSpeedStat>CookSpeed</workSpeedStat>
+        <requiredGiverWorkType>Cooking</requiredGiverWorkType>
+        <effectWorking>Cook</effectWorking>
+        <soundWorking>Recipe_CookMeal</soundWorking>
+        <allowMixingIngredients>true</allowMixingIngredients>
+        <ingredientValueGetterClass>MOAS_Expansion.IngredientValueGetter_MeatlessStick</ingredientValueGetterClass>
+        <researchPrerequisite>Ferny_SimpleMeals</researchPrerequisite>
+        <ingredients>
+          <li>
+            <filter>
+              <categories>
+                <li>MeatRaw</li>
+                <li>PlantFoodRaw</li>
+                <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
+                <li MayRequire="vanillaexpanded.vcef">Fish</li>
+              </categories>
+            </filter>
+            <count>2.0</count>
+          </li>
+          <li>
+            <filter>
+              <thingDefs>
+                <li>chrisb_moas_sticks</li>
+              </thingDefs>
+            </filter>
+            <count>4</count>
+          </li>
+        </ingredients>
+        <fixedIngredientFilter>
+          <categories>
+            <li>MeatRaw</li>
+            <li>PlantFoodRaw</li>
+            <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
+            <li MayRequire="vanillaexpanded.vcef">Fish</li>
+          </categories>
+          <disallowedCategories>
+            <li>AnimalProductRaw</li>
+          </disallowedCategories>
+        </fixedIngredientFilter>
+        <products>
+          <MeatOnAStick_food>4</MeatOnAStick_food>
+        </products>
+        <workSkill>Cooking</workSkill>
+        <displayPriority>91</displayPriority>
+        <recipeUsers>
+          <li>Campfire</li>
+        </recipeUsers>
+      </RecipeDef>
+    </value>
+  </Operation>
+
+</Patch>
