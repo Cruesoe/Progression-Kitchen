@@ -108,8 +108,7 @@
               <categories>
                 <li>MeatRaw</li>
                 <li>PlantFoodRaw</li>
-                <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
-                <li MayRequire="vanillaexpanded.vcef">Fish</li>
+                <li MayRequire="vanillaexpanded.vplantse">VCE_Fruit</li>
               </categories>
             </filter>
             <count>0.5</count>
@@ -127,8 +126,7 @@
           <categories>
             <li>MeatRaw</li>
             <li>PlantFoodRaw</li>
-            <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
-            <li MayRequire="vanillaexpanded.vcef">Fish</li>
+            <li MayRequire="vanillaexpanded.vplantse">VCE_Fruit</li>
           </categories>
           <disallowedCategories>
             <li>AnimalProductRaw</li>
@@ -167,8 +165,7 @@
               <categories>
                 <li>MeatRaw</li>
                 <li>PlantFoodRaw</li>
-                <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
-                <li MayRequire="vanillaexpanded.vcef">Fish</li>
+                <li MayRequire="vanillaexpanded.vplantse">VCE_Fruit</li>
               </categories>
             </filter>
             <count>2.0</count>
@@ -186,8 +183,7 @@
           <categories>
             <li>MeatRaw</li>
             <li>PlantFoodRaw</li>
-            <li MayRequire="Ludeon.RimWorld.Odyssey">Fish</li>
-            <li MayRequire="vanillaexpanded.vcef">Fish</li>
+            <li MayRequire="vanillaexpanded.vplantse">VCE_Fruit</li>
           </categories>
           <disallowedCategories>
             <li>AnimalProductRaw</li>
