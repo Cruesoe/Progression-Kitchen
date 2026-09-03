@@ -87,7 +87,7 @@
     </value>
   </Operation>
 
-  <!-- Same tier as vanilla's simple meal: raw food, cooked at a Campfire, no skill investment. -->
+  <!-- No research gate: available immediately, same as the original Meat on a Stick recipes were. -->
   <Operation Class="PatchOperationAdd">
     <xpath>Defs</xpath>
     <value>
@@ -102,7 +102,6 @@
         <soundWorking>Recipe_CookMeal</soundWorking>
         <allowMixingIngredients>true</allowMixingIngredients>
         <ingredientValueGetterClass>MOAS_Expansion.IngredientValueGetter_MeatlessStick</ingredientValueGetterClass>
-        <researchPrerequisite>Ferny_SimpleMeals</researchPrerequisite>
         <ingredients>
           <li>
             <filter>
@@ -162,7 +161,6 @@
         <soundWorking>Recipe_CookMeal</soundWorking>
         <allowMixingIngredients>true</allowMixingIngredients>
         <ingredientValueGetterClass>MOAS_Expansion.IngredientValueGetter_MeatlessStick</ingredientValueGetterClass>
-        <researchPrerequisite>Ferny_SimpleMeals</researchPrerequisite>
         <ingredients>
           <li>
             <filter>
