@@ -56,9 +56,53 @@
     <xpath>Defs/RecipeDef[defName="moas_CookStick4"]/recipeUsers/li[.="Campfire"]</xpath>
   </Operation>
 
+  <!-- None of the 8 original meal items (base "meat" plus the Expansion's 7 typed variants) can be
+       cooked anymore, so they're just clutter as separate stockpile/bill filter checkboxes now. None
+       of them declare thingCategories directly - it's inherited from their parent chain - so there's
+       no existing node for PatchOperationRemove to target. Adding an empty override isn't enough
+       either: without Inherit="False", XmlInheritance's merge only touches a field when the child
+       actually specifies content, so a genuinely empty <thingCategories> gets treated as "child didn't
+       say anything" and the parent's populated list passes through untouched. Inherit="False" forces
+       a real replace. The ThingDefs themselves are untouched, so any already-cooked instances a save
+       might have stay valid. -->
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_veg"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_little"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_blend"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_fish"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_fruit"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_fungus"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/ThingDef[defName="MeatOnAStick_meatless"]</xpath>
+    <value><thingCategories Inherit="False"></thingCategories></value>
+  </Operation>
+
   <!-- Universal "food on a stick" meal, built on MealCooked so its food-kind flags follow whatever
        ingredients were actually used (same base the Expansion's own "blend" item uses). Naming
-       ("Roasted venison", "Roasted potato", etc) comes from the base mod's per-instance NameGen comp. -->
+       ("Roasted venison", "Roasted potato", etc) comes from the base mod's per-instance NameGen comp.
+       The icon is picked per-instance by Graphic_FoodOnAStickVariant (Source/MOAS_FoodOnAStickGraphic)
+       from the Expansion's own per-type textures, based on what was actually cooked into it. -->
   <Operation Class="PatchOperationAdd">
     <xpath>Defs</xpath>
     <value>
@@ -68,7 +112,7 @@
         <description>Food skewered onto a stick and roasted over a fire.</description>
         <graphicData>
           <texPath>Things/Item/Meal/MeatOnAStick</texPath>
-          <graphicClass>Graphic_StackCount</graphicClass>
+          <graphicClass>ProgressionKitchen.MeatOnAStick.Graphic_FoodOnAStickVariant</graphicClass>
         </graphicData>
         <statBases>
           <MarketValue>10</MarketValue>
